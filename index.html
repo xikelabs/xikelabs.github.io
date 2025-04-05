@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="XikeLabs Games - Experience the most exciting mobile games. Download our popular games like DIY Makeup, Hair Dye, and more. Available on Android, iOS and Nintendo Switch.">
+    <meta name="keywords" content="XikeLabs, mobile games, casual games, android games, ios games, nintendo switch games, DIY games, makeup games">
+    <meta name="author" content="XikeLabs">
+    <meta property="og:title" content="XikeLabs Mobiles Games - Experience Exciting Mobile Games">
+    <meta property="og:description" content="Download and play the most exciting mobile games from XikeLabs. Available on Android, iOS and Nintendo Switch.">
+    <meta property="og:image" content="images/og-image.jpg">
+    <meta property="og:url" content="https://xikelabs.com">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://xikelabs.com">
+    <title>XikeLabs Games - Experience Exciting Mobile Games</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="icon" type="image/png" href="images/favicon.ico">
+</head>
+<body>
+    <div id="particles-js" aria-hidden="true"></div>
+    <header class="animate__animated animate__fadeInDown">
+        <nav class="main-nav" aria-label="Main navigation">
+            <div class="nav-container">
+                <div class="logo">
+                    <a href="#" aria-label="XikeLabs Home">
+                        <img src="images/logo.png" alt="XikeLabs Logo" width="60" height="60">
+                    </a>
+                </div>
+                <div class="nav-links">
+                    <a href="#games-grid" class="active" aria-current="page">Games</a>
+                    <a href="#about-section">About</a>
+                    <a href="#contact-section">Contact</a>
+                </div>
+                <div class="nav-buttons">
+                    <a href="#games-grid" class="btn-download" aria-label="Download Games">Download Games</a>
+                    <button class="btn-language" aria-label="Change Language">
+                        EN <i class="fas fa-chevron-down" aria-hidden="true"></i>
+                    </button>
+                </div>
+                <button class="mobile-menu" aria-label="Toggle mobile menu">
+                    <i class="fas fa-bars" aria-hidden="true"></i>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero" aria-label="Welcome section">
+            <video class="hero-video" autoplay muted loop playsinline preload="auto" aria-hidden="true">
+                <source src="videos/hero.mp4" type="video/mp4">
+            </video>
+            <div class="hero-content">
+                <h1>Xike Labs</h1>
+                <p>Experience the most exciting mobile games</p>
+                <a href="#games-grid" class="btn-download" aria-label="Browse our games">Download Now</a>
+            </div>
+        </section>
+
+        <section class="games-grid" id="games-grid" aria-label="Games section">
+            <div class="filters animate__animated animate__fadeInUp" role="tablist" aria-label="Game categories">
+                <button class="filter-btn active" data-filter="all" role="tab" aria-selected="true">All Games</button>
+                <button class="filter-btn" data-filter="action" role="tab" aria-selected="false">Action</button>
+                <button class="filter-btn" data-filter="puzzle" role="tab" aria-selected="false">Puzzle</button>
+                <button class="filter-btn" data-filter="arcade" role="tab" aria-selected="false">Arcade</button>
+            </div>
+            <div class="games-container" role="tabpanel" aria-label="Game list">
+                <!-- Game cards will be dynamically added here -->
+            </div>
+        </section>
+    </main>
+
+    <footer class="animate__animated animate__fadeInUp">
+        <div class="footer-content" id="footer-content">
+            <section class="footer-section" id="about-section">
+                <h2>About XikeLabs</h2>
+                <p>Creating amazing mobile games that bring joy to millions of players worldwide.</p>
+            </section>
+            <section class="footer-section">
+                <h2>Quick Links</h2>
+                <nav aria-label="Footer navigation">
+                    <ul>
+                        <li><a href="#games-grid">Games</a></li>
+                        <li><a href="#about-section">About Us</a></li>
+                        <li><a href="#contact-section">Contact</a></li>
+                    </ul>
+                </nav>
+            </section>
+            <section class="footer-section" id="contact-section">
+                <h2>Connect With Us</h2>
+                <div class="social-links" aria-label="Social media links">
+                    <a href="#" aria-label="Follow us on Facebook"><i class="fab fa-facebook" aria-hidden="true"></i></a>
+                    <a href="#" aria-label="Follow us on Twitter"><i class="fab fa-twitter" aria-hidden="true"></i></a>
+                    <a href="#" aria-label="Follow us on Instagram"><i class="fab fa-instagram" aria-hidden="true"></i></a>
+                    <a href="#" aria-label="Follow us on LinkedIn"><i class="fab fa-linkedin" aria-hidden="true"></i></a>
+                </div>
+            </section>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 XikeLabs. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Modal -->
+    <div id="downloadModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalGameTitle"></h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <img id="modalGameImage" src="" alt="Game Preview">
+                <p id="modalGameDescription"></p>
+                <p>Size: <span id="modalGameSize"></span></p>
+                <p>Version: <span id="modalGameVersion"></span></p>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-download-btn">Download Now</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js" defer></script>
+    <script src="js/main.js" defer></script>
+
+    <!-- Schema.org structured data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "XikeLabs",
+        "url": "https://xikelabs.com",
+        "logo": "https://xikelabs.com/images/logo.png",
+        "description": "Creating amazing mobile games that bring joy to millions of players worldwide.",
+        "sameAs": [
+            "https://facebook.com/xikelabs",
+            "https://twitter.com/xikelabs",
+            "https://instagram.com/xikelabs",
+            "https://linkedin.com/company/xikelabs"
+        ]
+    }
+    </script>
+</body>
+</html> 
