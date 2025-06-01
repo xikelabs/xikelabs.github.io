@@ -95,14 +95,14 @@ particlesJS('particles-js', {
 const games = [
     {
         id: 1,
-        title: "DIY Makeup",
+        title: "Meow Blossom Match",
         category: "puzzle",
-        image: "images/game1.png",
-        description: "Create your own makeup with various ingredients. Mix colors and create unique cosmetics.",
-        downloads: "50M",
-        ranking: "#1 in 50 Countries",
-        playTime: "1B Minutes of Play Time",
-        androidLink: "null",
+        image: "images/meow_blossom.png",
+        description: "Cute kitten match-3 puzzle! Match flowers, decorate, and relax now!",
+        downloads: "5k",
+        ranking: "#1 in store",
+        playTime: "100k Minutes of Play Time",
+        androidLink: "https://play.google.com/store/apps/details?id=com.xikelabs.meowblossommatch",
         iosLink: "null"
     },
     {
@@ -121,7 +121,7 @@ const games = [
     {
         id: 3,
         title: "Makeup Kit - Color Mixing",
-        category: "puzzle",
+        category: "other",
         image: "images/game3.png",
         description: "Mix and match colors to create perfect makeup combinations.",
         downloads: "75M",
