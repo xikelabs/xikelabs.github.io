@@ -187,12 +187,12 @@ document.addEventListener('keydown', (e) => {
 modalDownloadBtn.addEventListener('click', () => {
     const downloadUrl = modalDownloadBtn.getAttribute('data-download-url');
     // Here you can implement the actual download logic
-    console.log('Downloading game from:', downloadUrl);
+    //console.log('Downloading game from:', downloadUrl);
 });
 
 // Initialize the page
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('DOM loaded, initializing...');
+    //console.log('DOM loaded, initializing...');
     
     // Initialize DOM elements
     const gamesContainer = document.querySelector('.games-container');
@@ -207,7 +207,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Display all games first
-    console.log('Displaying games...');
+    //console.log('Displaying games...');
     displayGames('all');
     
     // Setup filter buttons
@@ -239,8 +239,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Display games based on category
 function displayGames(category) {
-    console.log('Displaying games for category:', category);
-    console.log('Available games:', games);
+    //console.log('Displaying games for category:', category);
+    //console.log('Available games:', games);
     
     // Get the games container
     const gamesContainer = document.querySelector('.games-container');
@@ -257,7 +257,7 @@ function displayGames(category) {
         ? games 
         : games.filter(game => game.category === category);
 
-    console.log('Filtered games:', filteredGames);
+    //console.log('Filtered games:', filteredGames);
 
     // Create and append game cards
     filteredGames.forEach((game, index) => {
@@ -272,25 +272,13 @@ function createGameCard(game) {
     const card = document.createElement('div');
     card.className = 'game-card animate__animated animate__fadeInUp';
     
-    const platformIcons = `
-        <div class="platform-icons">
-            ${game.androidLink !== "null" ? `
-                <a href="${game.androidLink}" class="platform-icon android" target="_blank" aria-label="Download on Android">
-                    <i class="fab fa-android"></i>
-                </a>
-            ` : ''}
-            ${game.iosLink !== "null" ? `
-                <a href="${game.iosLink}" class="platform-icon ios" target="_blank" aria-label="Download on iOS">
-                    <i class="fab fa-apple"></i>
-                </a>
-            ` : ''}
-            ${game.switchLink ? `
-                <a href="${game.switchLink}" class="platform-icon switch" target="_blank" aria-label="Available on Nintendo Switch">
-                    <i class="fas fa-gamepad"></i>
-                </a>
-            ` : ''}
-        </div>
-    `;
+    // Smart platform detection for mobile
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+    const isAndroid = /Android/.test(navigator.userAgent);
+    
+    // Create mobile-optimized download buttons
+    const downloadButtons = createMobileDownloadButtons(game, isMobile, isIOS, isAndroid);
     
     card.innerHTML = `
         <div class="game-card-image">
@@ -303,20 +291,201 @@ function createGameCard(game) {
         </div>
         <div class="game-card-content">
             <h2 class="game-title">${game.title}</h2>
-            <meta name="description" content="${game.description}">
+            <p class="game-description">${game.description}</p>
+            ${downloadButtons}
         </div>
-        ${platformIcons}
     `;
     
-    // Prevent modal from opening when clicking platform icons
-    const platformIconsElement = card.querySelector('.platform-icons');
-    if (platformIconsElement) {
-        platformIconsElement.addEventListener('click', (e) => {
+    // Add click event for download buttons
+    const downloadBtns = card.querySelectorAll('.download-btn');
+    downloadBtns.forEach(downloadBtn => {
+        downloadBtn.addEventListener('click', (e) => {
             e.stopPropagation();
+            e.preventDefault();
+            handleDownload(game, isMobile, isIOS, isAndroid, downloadBtn);
         });
-    }
+        
+        // Add touch feedback for mobile
+        if (isMobile) {
+            downloadBtn.addEventListener('touchstart', () => {
+                downloadBtn.style.transform = 'scale(0.98)';
+            });
+            
+            downloadBtn.addEventListener('touchend', () => {
+                downloadBtn.style.transform = 'scale(1)';
+            });
+        }
+    });
     
     return card;
+}
+
+// Create mobile-optimized download buttons
+function createMobileDownloadButtons(game, isMobile, isIOS, isAndroid) {
+    let buttonHTML = '';
+    
+    if (isMobile) {
+        // Mobile: Show platform-specific button
+        if (isIOS && game.iosLink && game.iosLink !== "null") {
+            buttonHTML = `
+                <div class="download-section mobile-download">
+                    <button class="download-btn ios-btn" data-platform="ios" data-url="${game.iosLink}">
+                        <i class="fab fa-apple"></i>
+                        <span>Download on App Store</span>
+                    </button>
+                </div>
+            `;
+        } else if (isAndroid && game.androidLink && game.androidLink !== "null") {
+            buttonHTML = `
+                <div class="download-section mobile-download">
+                    <button class="download-btn android-btn" data-platform="android" data-url="${game.androidLink}">
+                        <i class="fab fa-android"></i>
+                        <span>Download on Google Play</span>
+                    </button>
+                </div>
+            `;
+        } else if (game.androidLink && game.androidLink !== "null" || game.iosLink && game.iosLink !== "null") {
+            // Show both platforms if available
+            const androidBtn = game.androidLink && game.androidLink !== "null" ? `
+                <button class="download-btn android-btn" data-platform="android" data-url="${game.androidLink}">
+                    <i class="fab fa-android"></i>
+                    <span>Google Play</span>
+                </button>
+            ` : '';
+            
+            const iosBtn = game.iosLink && game.iosLink !== "null" ? `
+                <button class="download-btn ios-btn" data-platform="ios" data-url="${game.iosLink}">
+                    <i class="fab fa-apple"></i>
+                    <span>App Store</span>
+                </button>
+            ` : '';
+            
+            if (androidBtn || iosBtn) {
+                buttonHTML = `
+                    <div class="download-section mobile-download">
+                        ${androidBtn}
+                        ${iosBtn}
+                    </div>
+                `;
+            }
+        }
+        
+        // Add "Coming Soon" message if no download links available
+        if (!buttonHTML) {
+            buttonHTML = `
+                <div class="download-section mobile-download">
+                    <div class="coming-soon">
+                        <i class="fas fa-clock"></i>
+                        <span>Coming Soon</span>
+                    </div>
+                </div>
+            `;
+        }
+    } else {
+        // Desktop: Show platform icons (original design)
+        const androidIcon = game.androidLink !== "null" ? `
+            <a href="${game.androidLink}" class="platform-icon android" target="_blank" aria-label="Download on Android">
+                <i class="fab fa-android"></i>
+            </a>
+        ` : '';
+        
+        const iosIcon = game.iosLink !== "null" ? `
+            <a href="${game.iosLink}" class="platform-icon ios" target="_blank" aria-label="Download on iOS">
+                <i class="fab fa-apple"></i>
+            </a>
+        ` : '';
+        
+        const switchIcon = game.switchLink ? `
+            <a href="${game.switchLink}" class="platform-icon switch" target="_blank" aria-label="Available on Nintendo Switch">
+                <i class="fas fa-gamepad"></i>
+            </a>
+        ` : '';
+        
+        if (androidIcon || iosIcon || switchIcon) {
+            buttonHTML = `
+                <div class="platform-icons">
+                    ${androidIcon}
+                    ${iosIcon}
+                    ${switchIcon}
+                </div>
+            `;
+        }
+    }
+    
+    return buttonHTML;
+}
+
+// Handle download with better UX
+function handleDownload(game, isMobile, isIOS, isAndroid, downloadBtn) {
+    // Get platform from button data attribute
+    const platform = downloadBtn.getAttribute('data-platform');
+    const downloadUrl = downloadBtn.getAttribute('data-url');
+    
+    if (downloadUrl && downloadUrl !== "null") {
+        // Add haptic feedback on mobile
+        if (navigator.vibrate) {
+            navigator.vibrate(50);
+        }
+        
+        // Add visual feedback
+        if (downloadBtn) {
+            downloadBtn.classList.add('downloading');
+            downloadBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> <span>Opening...</span>';
+            
+            // Simulate loading time for better UX
+            setTimeout(() => {
+                window.open(downloadUrl, '_blank');
+                downloadBtn.classList.remove('downloading');
+                
+                // Restore original button content based on platform
+                if (platform === 'ios') {
+                    downloadBtn.innerHTML = `
+                        <i class="fab fa-apple"></i>
+                        <span>Download on App Store</span>
+                    `;
+                } else if (platform === 'android') {
+                    downloadBtn.innerHTML = `
+                        <i class="fab fa-android"></i>
+                        <span>Download on Google Play</span>
+                    `;
+                } else {
+                    // Fallback for other cases
+                    downloadBtn.innerHTML = `
+                        <i class="fab fa-download"></i>
+                        <span>Download Game</span>
+                    `;
+                }
+            }, 800);
+        }
+    } else {
+        // Show error message
+        showDownloadError(game.title);
+    }
+}
+
+// Show download error message
+function showDownloadError(gameTitle) {
+    const errorDiv = document.createElement('div');
+    errorDiv.className = 'download-error';
+    errorDiv.innerHTML = `
+        <div class="error-content">
+            <i class="fas fa-exclamation-triangle"></i>
+            <p>Download link not available for ${gameTitle}</p>
+            <button class="error-close">&times;</button>
+        </div>
+    `;
+    
+    document.body.appendChild(errorDiv);
+    
+    // Auto remove after 3 seconds
+    setTimeout(() => {
+        errorDiv.remove();
+    }, 3000);
+    
+    // Close button
+    errorDiv.querySelector('.error-close').addEventListener('click', () => {
+        errorDiv.remove();
+    });
 }
 
 // Setup event listeners
