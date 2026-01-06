@@ -95,18 +95,45 @@ particlesJS('particles-js', {
 const games = [
     {
         id: 1,
+        title: "Jelly Tap Escape",
+        category: "puzzle",
+        image: "images/jelly_tap_escape.png",
+        description: "Tap jelly blocks, clear paths, and solve relaxing tap away brain puzzles!",
+        downloads: "5k",
+        ranking: "#1 in store",
+        playTime: "100k Minutes of Play Time",
+        androidLink: "https://play.google.com/store/apps/details?id=com.xikelabs.jelly.tap.escape",
+        iosLink: "null"
+    }
+    ,
+    {
+        id: 2,
         title: "Meow Blossom Match",
         category: "puzzle",
         image: "images/meow_blossom.png",
         description: "Cute kitten match-3 puzzle! Match flowers, decorate, and relax now!",
         downloads: "5k",
-        ranking: "#1 in store",
-        playTime: "100k Minutes of Play Time",
+        ranking: "#2 in store",
+        playTime: "500k Minutes of Play Time",
         androidLink: "https://play.google.com/store/apps/details?id=com.xikelabs.meowblossommatch",
         iosLink: "null"
     },
+
     {
-        id: 2,
+        id: 3,
+        title: "Game New",
+        category: "puzzle",
+        image: "images/game_new.png",
+        description: "New.",
+        downloads: "0",
+        ranking: "#1 in 100 Countries",
+        playTime: "0 Minutes of Play Time",
+        androidLink: "null",
+        iosLink: "null",
+        //switchLink: "https://www.nintendo.com/games/detail/hair-dye"
+    },
+    {
+        id: 4,
         title: "Hair Dye",
         category: "action",
         image: "images/game2.png",
@@ -119,7 +146,7 @@ const games = [
         //switchLink: "https://www.nintendo.com/games/detail/hair-dye"
     },
     {
-        id: 3,
+        id: 4,
         title: "Makeup Kit - Color Mixing",
         category: "other",
         image: "images/game3.png",
@@ -156,7 +183,7 @@ function openModal(game) {
     modalGameSize.textContent = game.size;
     modalGameVersion.textContent = game.version;
     modalDownloadBtn.setAttribute('data-download-url', game.downloadUrl);
-    
+
     modal.classList.add('active');
     document.body.style.overflow = 'hidden';
 }
@@ -191,15 +218,15 @@ modalDownloadBtn.addEventListener('click', () => {
 });
 
 // Initialize the page
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     //console.log('DOM loaded, initializing...');
-    
+
     // Initialize DOM elements
     const gamesContainer = document.querySelector('.games-container');
     const filterButtons = document.querySelectorAll('.filter-btn');
     const mobileMenuBtn = document.querySelector('.mobile-menu');
     const navLinks = document.querySelector('.nav-links');
-    
+
     // Check if games container exists
     if (!gamesContainer) {
         console.error('Games container not found!');
@@ -209,13 +236,13 @@ document.addEventListener('DOMContentLoaded', function() {
     // Display all games first
     //console.log('Displaying games...');
     displayGames('all');
-    
+
     // Setup filter buttons
     filterButtons.forEach(button => {
         button.addEventListener('click', () => {
             const category = button.dataset.filter;
             console.log('Filter clicked:', category);
-            
+
             // Remove active class from all buttons
             filterButtons.forEach(btn => btn.classList.remove('active'));
             // Add active class to clicked button
@@ -230,7 +257,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeAnimations();
     addMetallicEffect();
     setupMobileMenu();
-    
+
     // Initialize particles.js
     // if (typeof particlesJS !== 'undefined') {
     //     particlesJS('particles-js', particlesConfig);
@@ -241,20 +268,20 @@ document.addEventListener('DOMContentLoaded', function() {
 function displayGames(category) {
     //console.log('Displaying games for category:', category);
     //console.log('Available games:', games);
-    
+
     // Get the games container
     const gamesContainer = document.querySelector('.games-container');
     if (!gamesContainer) {
         console.error('Games container not found');
         return;
     }
-    
+
     // Clear current games
     gamesContainer.innerHTML = '';
-    
+
     // Filter games based on category
-    const filteredGames = category === 'all' 
-        ? games 
+    const filteredGames = category === 'all'
+        ? games
         : games.filter(game => game.category === category);
 
     //console.log('Filtered games:', filteredGames);
@@ -271,15 +298,15 @@ function displayGames(category) {
 function createGameCard(game) {
     const card = document.createElement('div');
     card.className = 'game-card animate__animated animate__fadeInUp';
-    
+
     // Smart platform detection for mobile
     const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
     const isAndroid = /Android/.test(navigator.userAgent);
-    
+
     // Create mobile-optimized download buttons
     const downloadButtons = createMobileDownloadButtons(game, isMobile, isIOS, isAndroid);
-    
+
     card.innerHTML = `
         <div class="game-card-image">
             <img src="${game.image}" alt="${game.title} - ${game.description}" loading="lazy">
@@ -295,7 +322,7 @@ function createGameCard(game) {
             ${downloadButtons}
         </div>
     `;
-    
+
     // Add click event for download buttons
     const downloadBtns = card.querySelectorAll('.download-btn');
     downloadBtns.forEach(downloadBtn => {
@@ -304,26 +331,26 @@ function createGameCard(game) {
             e.preventDefault();
             handleDownload(game, isMobile, isIOS, isAndroid, downloadBtn);
         });
-        
+
         // Add touch feedback for mobile
         if (isMobile) {
             downloadBtn.addEventListener('touchstart', () => {
                 downloadBtn.style.transform = 'scale(0.98)';
             });
-            
+
             downloadBtn.addEventListener('touchend', () => {
                 downloadBtn.style.transform = 'scale(1)';
             });
         }
     });
-    
+
     return card;
 }
 
 // Create mobile-optimized download buttons
 function createMobileDownloadButtons(game, isMobile, isIOS, isAndroid) {
     let buttonHTML = '';
-    
+
     if (isMobile) {
         // Mobile: Show platform-specific button
         if (isIOS && game.iosLink && game.iosLink !== "null") {
@@ -352,14 +379,14 @@ function createMobileDownloadButtons(game, isMobile, isIOS, isAndroid) {
                     <span>Google Play</span>
                 </button>
             ` : '';
-            
+
             const iosBtn = game.iosLink && game.iosLink !== "null" ? `
                 <button class="download-btn ios-btn" data-platform="ios" data-url="${game.iosLink}">
                     <i class="fab fa-apple"></i>
                     <span>App Store</span>
                 </button>
             ` : '';
-            
+
             if (androidBtn || iosBtn) {
                 buttonHTML = `
                     <div class="download-section mobile-download">
@@ -369,7 +396,7 @@ function createMobileDownloadButtons(game, isMobile, isIOS, isAndroid) {
                 `;
             }
         }
-        
+
         // Add "Coming Soon" message if no download links available
         if (!buttonHTML) {
             buttonHTML = `
@@ -388,19 +415,19 @@ function createMobileDownloadButtons(game, isMobile, isIOS, isAndroid) {
                 <i class="fab fa-android"></i>
             </a>
         ` : '';
-        
+
         const iosIcon = game.iosLink !== "null" ? `
             <a href="${game.iosLink}" class="platform-icon ios" target="_blank" aria-label="Download on iOS">
                 <i class="fab fa-apple"></i>
             </a>
         ` : '';
-        
+
         const switchIcon = game.switchLink ? `
             <a href="${game.switchLink}" class="platform-icon switch" target="_blank" aria-label="Available on Nintendo Switch">
                 <i class="fas fa-gamepad"></i>
             </a>
         ` : '';
-        
+
         if (androidIcon || iosIcon || switchIcon) {
             buttonHTML = `
                 <div class="platform-icons">
@@ -411,7 +438,7 @@ function createMobileDownloadButtons(game, isMobile, isIOS, isAndroid) {
             `;
         }
     }
-    
+
     return buttonHTML;
 }
 
@@ -420,23 +447,23 @@ function handleDownload(game, isMobile, isIOS, isAndroid, downloadBtn) {
     // Get platform from button data attribute
     const platform = downloadBtn.getAttribute('data-platform');
     const downloadUrl = downloadBtn.getAttribute('data-url');
-    
+
     if (downloadUrl && downloadUrl !== "null") {
         // Add haptic feedback on mobile
         if (navigator.vibrate) {
             navigator.vibrate(50);
         }
-        
+
         // Add visual feedback
         if (downloadBtn) {
             downloadBtn.classList.add('downloading');
             downloadBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> <span>Opening...</span>';
-            
+
             // Simulate loading time for better UX
             setTimeout(() => {
                 window.open(downloadUrl, '_blank');
                 downloadBtn.classList.remove('downloading');
-                
+
                 // Restore original button content based on platform
                 if (platform === 'ios') {
                     downloadBtn.innerHTML = `
@@ -474,14 +501,14 @@ function showDownloadError(gameTitle) {
             <button class="error-close">&times;</button>
         </div>
     `;
-    
+
     document.body.appendChild(errorDiv);
-    
+
     // Auto remove after 3 seconds
     setTimeout(() => {
         errorDiv.remove();
     }, 3000);
-    
+
     // Close button
     errorDiv.querySelector('.error-close').addEventListener('click', () => {
         errorDiv.remove();
@@ -546,12 +573,12 @@ function addMetallicEffect() {
             const rect = button.getBoundingClientRect();
             const x = e.clientX - rect.left;
             const y = e.clientY - rect.top;
-            
+
             button.style.setProperty('--x', `${x}px`);
             button.style.setProperty('--y', `${y}px`);
         });
     });
-    
+
     // Add floating animation to hero content
     const heroContent = document.querySelector('.hero-content');
     if (heroContent) {
@@ -604,8 +631,8 @@ function setupMobileMenu() {
 
     // Close mobile menu when clicking outside
     document.addEventListener('click', (e) => {
-        if (mobileNav.classList.contains('active') && 
-            !mobileNav.contains(e.target) && 
+        if (mobileNav.classList.contains('active') &&
+            !mobileNav.contains(e.target) &&
             !mobileMenuBtn.contains(e.target)) {
             mobileNav.classList.remove('active');
             body.style.overflow = '';
