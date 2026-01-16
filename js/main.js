@@ -99,9 +99,9 @@ const games = [
         category: "puzzle",
         image: "images/jelly_tap_escape.png",
         description: "Tap jelly blocks, clear paths, and solve relaxing tap away brain puzzles!",
-        downloads: "5k",
-        ranking: "#1 in store",
-        playTime: "100k Minutes of Play Time",
+        downloads: "",
+        ranking: "",
+        playTime: "",
         androidLink: "https://play.google.com/store/apps/details?id=com.xikelabs.jelly.tap.escape",
         iosLink: "null"
     }
@@ -112,23 +112,23 @@ const games = [
         category: "puzzle",
         image: "images/meow_blossom.png",
         description: "Cute kitten match-3 puzzle! Match flowers, decorate, and relax now!",
-        downloads: "5k",
-        ranking: "#2 in store",
-        playTime: "500k Minutes of Play Time",
+        downloads: "",
+        ranking: "",
+        playTime: "",
         androidLink: "https://play.google.com/store/apps/details?id=com.xikelabs.meowblossommatch",
         iosLink: "null"
     },
 
     {
         id: 3,
-        title: "Game New",
+        title: "Arrow Puzzle: Tap Escape",
         category: "puzzle",
-        image: "images/game_new.png",
-        description: "New.",
-        downloads: "0",
-        ranking: "#1 in 100 Countries",
-        playTime: "0 Minutes of Play Time",
-        androidLink: "null",
+        image: "images/arrow_puzzle_tap_escape.png",
+        description: "",
+        downloads: "",
+        ranking: "",
+        playTime: "",
+        androidLink: "https://play.google.com/store/apps/details?id=com.arrow.puzzle.tap.escape",
         iosLink: "null",
         //switchLink: "https://www.nintendo.com/games/detail/hair-dye"
     },
@@ -155,6 +155,18 @@ const games = [
         ranking: "#1 in Beauty Games",
         playTime: "1.5B Minutes of Play Time",
         androidLink: "null",
+        iosLink: "null"
+    },
+    {
+        id: 4,
+        title: "Solitaire Puzzle: Brain Challenge",
+        category: "other",
+        image: "images/solitaire_puzzle_brain_challenge.png",
+        description: "",
+        downloads: "",
+        ranking: "",
+        playTime: "",
+        androidLink: "https://play.google.com/store/apps/details?id=com.solitaire.puzzle.brain.challenge",
         iosLink: "null"
     }
 ];
