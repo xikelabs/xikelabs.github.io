@@ -160,7 +160,7 @@ const games = [
     {
         id: 4,
         title: "Solitaire Puzzle: Brain Challenge",
-        category: "other",
+        category: "puzzle",
         image: "images/solitaire_puzzle_brain_challenge.png",
         description: "",
         downloads: "",
